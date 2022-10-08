@@ -5,13 +5,14 @@ import pygame
 from settings import *
 from scene import Scene
 
+
 class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode(SCR_SIZE)
         pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
-        self.scene = Scene()
+        self.start_scene = Scene()
 
     def run(self):
         # main loop
@@ -22,7 +23,7 @@ class Game:
                     sys.exit()
 
             dt = self.clock.tick() / 1000
-            self.scene.run(dt)
+            self.start_scene.run(dt)
             pygame.display.update()
 
 
