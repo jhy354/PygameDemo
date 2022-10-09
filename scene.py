@@ -1,22 +1,32 @@
 import pygame
 
+from utils import Debug
 from settings import *
-
 from player import Player
 
+
 class Scene:
+
     def __init__(self):
-        # get display surface
+        # Get display surface
         self.display_surface = pygame.display.get_surface()
 
-        # sprite groups
+        # Sprite groups
         self.all_sprites = pygame.sprite.Group()
+
+        # Instance attribute definition
+        self.player = None
 
         self.setup()
 
-        print("Init Scene")
+        Debug(DEBUG_MODE) << "Init Scene" << "\n"
 
     def setup(self):
+        """
+        Setup attributes
+
+        :return: None
+        """
         self.player = Player((36, 64), (640, 360), self.all_sprites)
 
     def run(self, dt):

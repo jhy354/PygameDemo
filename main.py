@@ -2,20 +2,27 @@ import sys
 
 import pygame
 
+from utils import Debug
 from settings import *
 from scene import Scene
 
 
 class Game:
+
     def __init__(self):
+        # Pygame Init
         pygame.init()
-        self.screen = pygame.display.set_mode(SCR_SIZE)
         pygame.display.set_caption(CAPTION)
+        self.screen = pygame.display.set_mode(SCR_SIZE)
         self.clock = pygame.time.Clock()
+
+        # Attribute definition
         self.start_scene = Scene()
 
+        Debug(DEBUG_MODE) << "Init Game" << "\n"
+
     def run(self):
-        # main loop
+        # MAIN LOOP
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
