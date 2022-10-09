@@ -2,10 +2,12 @@ import sys
 
 import pygame
 
+from utils import Debug
 from settings import *
 
 
 class Player(pygame.sprite.Sprite):
+
     def __init__(self, size: tuple, pos: tuple, group):
         super().__init__(group)
         self.pos = pos
@@ -22,21 +24,25 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP]:
-            print("Key Up")
+            Debug(DEBUG_MODE) << "Key Up" << "\n"
             self.direction.y = -1
+
         elif keys[pygame.K_DOWN]:
-            print("Key Down")
+            Debug(DEBUG_MODE) << "Key Down" << "\n"
             self.direction.y = 1
 
         if keys[pygame.K_LEFT]:
-            print("Key Left")
+            Debug(DEBUG_MODE) << "Key Left" << "\n"
             self.direction.x = -1
+
         elif keys[pygame.K_RIGHT]:
-            print("Key Right")
+            Debug(DEBUG_MODE) << "Key Right" << "\n"
             self.direction.x = 1
 
         if keys[pygame.K_SPACE]:
-            print("Key Space")
+            pass
+            Debug(DEBUG_MODE) << "Key Space" << "\n"
 
     def update(self, dt):
+        super().update()
         self.respond_input()
