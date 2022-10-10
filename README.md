@@ -1,5 +1,5 @@
 # **Pygame Demo**
-PygameDemo is a elegant demo for Pygame beginners to create a maintainable Pygame project.
+PygameDemo is an elegant demo for Pygame beginners to create a maintainable Pygame project.
 ## Getting Started
 1. Make sure you are running this project under Python3
 ```
