@@ -1,3 +1,5 @@
 SCR_SIZE = (1280, 720)
 CAPTION = f"TITLE"
+FPS = 60
+
 DEBUG_MODE = True
