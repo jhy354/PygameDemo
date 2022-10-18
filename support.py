@@ -1,0 +1,24 @@
+from os import walk
+
+import pygame
+
+from settings import *
+from utils import Debug
+
+
+def import_folder(path):
+    surface_list = []
+
+    for folder_name, sub_folder, img_files in walk(path):
+        for image in img_files:
+            full_path = path + "/" + image
+            Debug(DEBUG_MODE) << full_path << "\n"
+
+            # convert_alpha() 优化性能, 但相对于 convert() 保留了透明效果
+            image_surf = pygame.image.load(full_path).convert_alpha()
+            surface_list.append(image_surf)
+
+        Debug(DEBUG_MODE) << "Imported Folder " << path << "\n"
+        Debug(DEBUG_MODE).div()
+
+    return surface_list

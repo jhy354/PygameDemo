@@ -1,6 +1,3 @@
-LAST_LINE = ""
-
-
 class Debug:
     """
     Debug log print
@@ -10,9 +7,11 @@ class Debug:
         self.debug_mode = debug_mode
 
     def __lshift__(self, other):
-        global LAST_LINE
-        if self.debug_mode and str(other) != LAST_LINE:
+        if self.debug_mode:
             print(other, end="")
-            LAST_LINE = str(other)
 
         return self
+
+    def div(self):
+        if self.debug_mode:
+            print("-" * 30)
