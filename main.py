@@ -19,7 +19,7 @@ class Game:
         # Attribute definition
         self.start_scene = Scene()
 
-        Debug(DEBUG_MODE) << "Init Game" << "\n"
+        Debug(DEBUG_MODE) << "Inited Game" << "\n"
 
     def run(self):
         # MAIN LOOP

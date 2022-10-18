@@ -19,7 +19,7 @@ class Scene:
 
         self.setup()
 
-        Debug(DEBUG_MODE) << "Init Scene" << "\n"
+        Debug(DEBUG_MODE) << "Inited Scene" << "\n"
 
     def setup(self):
         """
@@ -27,7 +27,7 @@ class Scene:
 
         :return: None
         """
-        self.player = Player((36, 64), (640, 360), self.all_sprites)
+        self.player = Player((SCR_SIZE[0]//2, SCR_SIZE[1]//2), self.all_sprites)
 
     def run(self, dt):
         self.display_surface.fill("black")
