@@ -3,13 +3,14 @@ import sys
 import pygame
 
 from utils import Debug
+from utils import Timer
 from support import import_folder
 from settings import *
 
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, pos: tuple, group):
+    def __init__(self, pos, group):
         super().__init__(group)
 
         # * Image Attributes * #
@@ -30,53 +31,78 @@ class Player(pygame.sprite.Sprite):
         self.acceleration = 10
         self.max_speed = 200
 
+        # * Timers * #
+        self.timers = {
+            # 函数后不应有 "()"
+            "jump": Timer(1000, self.done_jump)
+        }
+
         Debug(DEBUG_MODE) << "Inited Player" << "\n"
 
+    def update(self, dt):
+        super().update()
+
+        self.respond_input()
+        self.horizontal_move(dt)
+        self.vertical_move(dt)
+        self.update_timers()
+
+        # Animation
+        self.switch_frame(dt)
+        self.switch_status()
+
+    def update_timers(self):
+        for timer in self.timers.values():
+            timer.update()
+
     def respond_input(self):
-        # Better than "event.type == KEYDOWN"
-        keys = pygame.key.get_pressed()
+        if not self.timers["jump"].active:
+            # Better than "event.type == KEYDOWN"
+            keys = pygame.key.get_pressed()
 
-        # Horizontal Movement
-        if keys[pygame.K_LEFT]:
-            self.animation_status = "walk"
-            self.direction.x = -1
-            if self.speed_x <= self.max_speed:
-                self.speed_x += self.acceleration
+            # * Horizontal Movement * #
+            if keys[pygame.K_LEFT]:
+                self.animation_status = "walk"
+                self.direction.x = -1
+                if self.speed_x <= self.max_speed:
+                    self.speed_x += self.acceleration
 
-        elif keys[pygame.K_RIGHT]:
-            self.animation_status = "walk"
-            self.direction.x = 1
-            if self.speed_x <= self.max_speed:
-                self.speed_x += self.acceleration
+            elif keys[pygame.K_RIGHT]:
+                self.animation_status = "walk"
+                self.direction.x = 1
+                if self.speed_x <= self.max_speed:
+                    self.speed_x += self.acceleration
 
-        else:
-            if self.speed_x >= 0:
-                self.speed_x -= self.acceleration
             else:
-                self.direction.x = 0
+                if self.speed_x >= 0:
+                    self.speed_x -= self.acceleration
+                else:
+                    self.direction.x = 0
 
-        # Vertical Movement
-        if keys[pygame.K_UP]:
-            self.direction.y = -1
-            if self.speed_y <= self.max_speed:
-                self.speed_y += self.acceleration
+            # * Vertical Movement * #
+            if keys[pygame.K_UP]:
+                self.direction.y = -1
+                if self.speed_y <= self.max_speed:
+                    self.speed_y += self.acceleration
 
-        elif keys[pygame.K_DOWN]:
-            self.direction.y = 1
-            if self.speed_y <= self.max_speed:
-                self.speed_y += self.acceleration
+            elif keys[pygame.K_DOWN]:
+                self.direction.y = 1
+                if self.speed_y <= self.max_speed:
+                    self.speed_y += self.acceleration
 
-        else:
-            if self.speed_y >= 0:
-                self.speed_y -= self.acceleration
             else:
-                self.direction.y = 0
+                if self.speed_y >= 0:
+                    self.speed_y -= self.acceleration
+                else:
+                    self.direction.y = 0
 
-        # Other Movement
-        if keys[pygame.K_SPACE]:
-            pass
-        else:
-            pass
+            # * Other Movement * #
+            if keys[pygame.K_SPACE]:
+                self.timers["jump"].activate()
+                self.direction = pygame.math.Vector2()
+                self.frame_index = 0  # Start a new animation
+            else:
+                pass
 
     def horizontal_move(self, dt):
         # Vector Normalize
@@ -117,17 +143,14 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations[self.animation_status][int(self.frame_index)]
 
     def switch_status(self):
-        # Idle
-        if self.direction.magnitude() == 0:
+        # 注意优先级
+        # * Jump * #
+        if self.timers["jump"].active:
+            self.animation_status = "jump"
+
+        # * Idle * #
+        elif self.direction.magnitude() == 0:
             self.animation_status = "idle"
 
-    def update(self, dt):
-        super().update()
-
-        self.respond_input()
-        self.horizontal_move(dt)
-        self.vertical_move(dt)
-
-        # Animation
-        self.switch_frame(dt)
-        self.switch_status()
+    def done_jump(self):
+        Debug(DEBUG_MODE) << "Done Jump" << "\n"

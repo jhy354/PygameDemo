@@ -16,10 +16,13 @@ class Game:
         self.screen = pygame.display.set_mode(SCR_SIZE)
         self.clock = pygame.time.Clock()
 
+        Debug(DEBUG_MODE).div()
+
         # Attribute definition
         self.start_scene = Scene()
 
         Debug(DEBUG_MODE) << "Inited Game" << "\n"
+        Debug(DEBUG_MODE).div()
 
     def run(self):
         # MAIN LOOP
