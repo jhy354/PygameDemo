@@ -22,11 +22,6 @@ class Scene:
         Debug(DEBUG_MODE) << "Inited Scene" << "\n"
 
     def setup(self):
-        """
-        Setup attributes
-
-        :return: None
-        """
         self.player = Player((SCR_SIZE[0]//2, SCR_SIZE[1]//2), self.all_sprites)
 
     def run(self, dt):
