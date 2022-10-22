@@ -5,6 +5,7 @@ import pygame
 from utils import Debug
 from settings import *
 from scene import Scene
+from scene import CameraGroup
 
 
 class Game:
@@ -19,7 +20,7 @@ class Game:
         Debug(DEBUG_MODE).div()
 
         # Attribute definition
-        self.start_scene = Scene()
+        self.main_scene = Scene()
 
         Debug(DEBUG_MODE) << "Inited Game" << "\n"
         Debug(DEBUG_MODE).div()
@@ -33,7 +34,7 @@ class Game:
                     sys.exit()
 
             dt = self.clock.tick(FPS) / 1000
-            self.start_scene.run(dt)
+            self.main_scene.run(dt)
             pygame.display.update()
 
 
