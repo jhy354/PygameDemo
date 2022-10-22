@@ -24,7 +24,7 @@ class Scene:
         self.ground = Generic(
             pos=(0, 0),
             surf=import_folder(PATH_WORLD)[0],
-            groups=self.all_sprites,
+            group=self.all_sprites,
             z=LAYERS["ground"]
         )
         self.player = Player(SCR_CENTER, self.all_sprites)
