@@ -23,7 +23,7 @@ class Scene:
     def setup(self):
         self.ground = Generic(
             pos=(0, 0),
-            surf=import_folder(PATH_WORLD)[1],
+            surf=import_folder(PATH_WORLD)[0],
             groups=self.all_sprites,
             z=LAYERS["ground"]
         )
