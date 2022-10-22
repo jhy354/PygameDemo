@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.frame_index = 0
         self.image = self.animations[self.animation_status][self.frame_index]
         self.rect = self.image.get_rect(center=pos)
+        self.z = LAYERS["main"]
 
         # * Movement Attributes * #
         self.direction = pygame.math.Vector2()
@@ -129,7 +130,7 @@ class Player(pygame.sprite.Sprite):
         }
 
         for animation in self.animations.keys():
-            full_path = PATH_ASSETS + animation
+            full_path = PATH_PLAYER + animation
             self.animations[animation] = import_folder(full_path)
 
     def switch_frame(self, dt):

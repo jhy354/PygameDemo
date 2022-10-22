@@ -6,7 +6,10 @@ from settings import *
 from utils import Debug
 
 
-def import_folder(path):
+def import_folder(path) -> list[pygame.surface]:
+    """
+    将 path 中所有图片文件导入为 surface 对象
+    """
     surface_list = []
 
     for folder_name, sub_folder, img_files in walk(path):
